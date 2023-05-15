@@ -1,16 +1,16 @@
-/**************PresentaciÛn***********
-Nombre: Barba RamÌrez Kevin JosuÈ y MartÌnez MuÒoz Alejandra EstefanÌa
+/**************Presentaci√≥n***********
+Nombre: Barba Ram√≠rez Kevin Josu√© y Mart√≠nez Mu√±oz Alejandra Estefan√≠a
 Fecha: domingo 14-mayo-2023
 Programa: ProyectoFinal.cpp
 Centro Universitario de los Altos / Universidad de Guadalajara
-INGENIERÕA EN COMPUTACI”N / 2DO SEMESTRE
+INGENIER√çA EN COMPUTACI√ìN / 2DO SEMESTRE
 Profesor: Cruz Franco Carlos Javier
-DescripciÛn: Programa que almacena datos especÌficos sobre alumnos (nombre, materias, maestros, carrera y calificaciones) para mostrar un promedio de calificaciones,
-adem·s que permite modificar/borrar cualquiera de los datos
+Descripci√≥n: Programa que almacena datos espec√≠ficos sobre alumnos (nombre, materias, maestros, carrera y calificaciones) para mostrar un promedio de calificaciones,
+adem√°s que permite modificar/borrar cualquiera de los datos
 ***************************************/
-#include <iostream> //Se incluye la librerÌa principal
-#include <string>  //LibrerÌa para poder usar datos del tipo string
-#include <vector> ////Estructura de vector utilizada para ordenar los datos y permitir guardar m·s de una cosa en cada estructura
+#include <iostream> //Se incluye la librer√≠a principal
+#include <string>  //Librer√≠a para poder usar datos del tipo string
+#include <vector> ////Estructura de vector utilizada para ordenar los datos y permitir guardar m√°s de una cosa en cada estructura
 using namespace std; // Marca el uso del cout sin la funcion del std
 
 //Declara la estructura de los alumnos
@@ -38,11 +38,11 @@ int main(){
 	struct Alumno;
 	//Muestra la bienvenida al usuario
 	cout << "------------BIENVENIDO------------" << endl;
-	//Declara la variable para la seleccion del men˙
+	//Declara la variable para la seleccion del men√∫
 	char sel;
 	//Inicia un ciclo hasta que se quiera cerrar el programa
 	do{
-		//Muestra el men˙
+		//Muestra el men√∫
 		cout << "----------------------------------" << endl;
 		cout << "|Que quieres hacer?              |" << endl;
 		cout << "|1.Agregar alumno                |" << endl;
@@ -53,7 +53,7 @@ int main(){
 		cout << "----------------------------------" << endl;
 		cout << "Seleccion: ";
 		cin >> sel;
-		//Inicia un switch seg˙n la selecciÛn del usuario
+		//Inicia un switch seg√∫n la selecci√≥n del usuario
 		switch(sel){
 			//Indicaciones de como agregar un alumno
 			case '1':
@@ -77,7 +77,7 @@ int main(){
 				cout << "Eso era todo, muchas gracias por usar el programa :)" << endl;
 				cout << "----------------------------------------------------" << endl;
 			break;
-			//Indicaciones para cuando no se cumple ning˙n caso anterior
+			//Indicaciones para cuando no se cumple ning√∫n caso anterior
 			default:
 				cout << "Noup, definitivamente esa no es una opcion, intenta otra vez" << endl;
 				cout << "----------------------------------" << endl;
@@ -86,7 +86,8 @@ int main(){
 	}while(sel!='5');
 }
 
-void agregar() {
+//Apartado de voids
+void agregar() { //Para la opci√≥n agregar alumno
     Alumno alumno;
     cin.ignore();
     cout << "Ingrese el nombre del alumno: ";
@@ -118,8 +119,8 @@ void agregar() {
 system("pause");
 }
 
-void editar() {
-    if (alumnos.empty()) {
+void editar() { //Para editar a los alumnos
+    if (alumnos.empty()) { //Si a√∫n no se han agregado
         cout << "No hay alumnos registrados" << endl;
         cout << "----------------------------------" << endl;
         return;
@@ -158,18 +159,18 @@ void editar() {
     cin >> opcion;
     cin.ignore();
     cout << "----------------------------------" << endl;
-    switch (opcion) {
-        case 1:
+    switch (opcion) { //Seg√∫n la opci√≥n que seleccione
+        case 1: //Editar nombre
             cout << "Ingrese el nuevo nombre: ";
             getline(cin, alumno.nombre);
             cout << "----------------------------------" << endl;
         break;
-        case 2:
+        case 2: //Editar carrera
             cout << "Ingrese la nueva carrera: ";
             getline(cin, alumno.carrera);
             cout << "----------------------------------" << endl;
         break;
-        case 3:
+        case 3: //Editar materia
             if (alumno.materias.empty()) {
                 cout << "El alumno no tiene materias registradas" << endl;
                 cout << "----------------------------------" << endl;
@@ -195,31 +196,31 @@ void editar() {
             int que;
             cin >> que;
             cout << "----------------------------------" << endl;
-            switch (que) {
-		        case 1:
+            switch (que) { //Seg√∫n la opci√≥n que seleccione
+		        case 1: //Editar nombre de materia
 		            cout << "Ingrese el nuevo nombre de la materia: ";
 		            cin.ignore();
 		            getline(cin, alumno.materias[cual-1]);
 		            cout << "----------------------------------" << endl;
 		        break;
-		        case 2:
+		        case 2: //Editar nombre de maestro de imparte la materia
 		            cout << "Ingrese el nuevo maestro de la materia: ";
 		            cin.ignore();
 		            getline(cin, alumno.maestros[cual-1]);
 		            cout << "----------------------------------" << endl;
 		        break;
-		        case 3:
+		        case 3: //Editar la calificaci√≥n de la materia
 		            cout << "Ingrese la nueva calificacion de la materia: ";
 		            cin >> alumno.calificaciones[cual-1];
 		            cout << "----------------------------------" << endl;
 		        break;
-		        default:
+		        default: //Si selecciona una opci√≥n que no existe
 		            cout << "Opcion invalida (?" << endl;
 		            cout << "----------------------------------" << endl;
 		        break;
 		    }
 		break;
-		default:
+		default: //Si selecciona una opci√≥n que no existe
 		    cout << "Opcion invalida (?" << endl;
 		    cout << "----------------------------------" << endl;
 		break;
@@ -229,7 +230,7 @@ void editar() {
 system("pause");
 }
 
-void vaciar(){
+void vaciar(){ //Para eliminar los alumnos ya registrados
     if (alumnos.empty()) {
         cout << "No hay alumnos registrados" << endl;
         cout << "----------------------------------" << endl;
@@ -256,7 +257,7 @@ void vaciar(){
 system("pause");
 }
 
-void ver(){
+void ver(){ //Para ver la lista de alumnos guardados
 	if (alumnos.empty()) {
         cout << "No hay alumnos registrados" << endl;
         cout << "----------------------------------" << endl;
