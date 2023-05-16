@@ -10,8 +10,9 @@ además que permite modificar/borrar cualquiera de los datos
 ***************************************/
 #include <iostream> //Se incluye la librería principal
 #include <string>  //Librería para poder usar datos del tipo string
-#include <vector> ////Estructura de vector utilizada para ordenar los datos y permitir guardar más de una cosa en cada estructura
-using namespace std; // Marca el uso del cout sin la funcion del std
+#include <vector> //Estructura de vector utilizada para ordenar los datos y permitir guardar más de una cosa en cada estructura
+#include <fstream> //Librería para guardar en archivo externo
+using namespace std; //Marca el uso del cout sin la funcion del std
 
 //Declara la estructura de los alumnos
 struct Alumno{
@@ -53,6 +54,7 @@ int main(){
 		cout << "----------------------------------" << endl;
 		cout << "Seleccion: ";
 		cin >> sel;
+		
 		//Inicia un switch según la selección del usuario
 		switch(sel){
 			//Indicaciones de como agregar un alumno
@@ -84,16 +86,20 @@ int main(){
 			break;
 			}
 	}while(sel!='5');
+	
 }
 
 //Apartado de voids
 void agregar() { //Para la opción agregar alumno
+	ofstream archivo("datos.txt"); //Abrir archivo para guardar los datos
     Alumno alumno;
     cin.ignore();
     cout << "Ingrese el nombre del alumno: ";
     getline(cin, alumno.nombre);
+    archivo<<"Nombre: "<<alumno.nombre<<endl;
     cout << "Ingrese la carrera del alumno: ";
     getline(cin, alumno.carrera);
+    archivo<<"Carrera: "<<alumno.carrera<<endl;
     cout << "Ingrese el numero de materias: ";
     int cuantas;
     cin >> cuantas;
@@ -103,17 +109,21 @@ void agregar() { //Para la opción agregar alumno
         string materia;
         getline(cin, materia);
         alumno.materias.push_back(materia);
+        archivo << "Materia " << i+1 << ": " << materia << endl;
         cout << "Ingrese el nombre del maestro de la materia " << i+1 << ": ";
         string maestro;
         getline(cin, maestro);
         alumno.maestros.push_back(maestro);
+        archivo << "Maestro: " << maestro << endl;
         cout << "Ingrese la calificacion de la materia " << i+1 << ": ";
         float calificacion;
         cin >> calificacion;
         alumno.calificaciones.push_back(calificacion);
+        archivo << "Calificacion: " << calificacion << endl;
         cin.ignore();
     }
     alumnos.push_back(alumno);
+    archivo.close();
     cout << "Alumno registrado exitosamente" << endl;
     cout << "----------------------------------" << endl;
 system("pause");
@@ -127,7 +137,7 @@ void editar() { //Para editar a los alumnos
     }
     cout << "----------------------------------" << endl;
     cout << "Alumnos registrados:" << endl;
-    for (int i = 0; i < alumnos.size(); i++) {
+    for (int i = 1; i < alumnos.size(); i++) {
         cout << i << ". " << alumnos[i].nombre << endl;
     }
     cout << "----------------------------------" << endl;
@@ -214,7 +224,7 @@ void editar() { //Para editar a los alumnos
 		            cin >> alumno.calificaciones[cual-1];
 		            cout << "----------------------------------" << endl;
 		        break;
-		        default: //Si selecciona una opción que no existe
+		        default:
 		            cout << "Opcion invalida (?" << endl;
 		            cout << "----------------------------------" << endl;
 		        break;
@@ -258,7 +268,8 @@ system("pause");
 }
 
 void ver(){ //Para ver la lista de alumnos guardados
-	if (alumnos.empty()) {
+	string archivo="datos.txt";
+	if (alumnos.empty() && archivo.empty()) {
         cout << "No hay alumnos registrados" << endl;
         cout << "----------------------------------" << endl;
         return;
@@ -268,6 +279,12 @@ void ver(){ //Para ver la lista de alumnos guardados
     for (int i = 0; i < alumnos.size(); i++) {
         cout << i << ". " << alumnos[i].nombre << endl;
     }
+    ifstream entrada(archivo.c_str()); //Abrir archivo para mostrar datos guardados
+    string linea;
+    while (getline(entrada, linea)) {
+        cout << linea << endl;
+    }
+    entrada.close(); //Cerrar archivo
     cout << "----------------------------------" << endl;
     cout << "Seleccione un alumno: ";
     int seleccion;
