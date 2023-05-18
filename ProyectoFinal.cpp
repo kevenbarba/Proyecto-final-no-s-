@@ -11,6 +11,7 @@ además que permite modificar/borrar cualquiera de los datos
 #include <iostream> //Se incluye la librería principal
 #include <string>  //Librería para poder usar datos del tipo string
 #include <vector> //Estructura de vector utilizada para ordenar los datos y permitir guardar más de una cosa en cada estructura
+#include <limits> // Incluir la biblioteca <limits> para usar numeric_limits
 using namespace std; //Marca el uso del cout sin la funcion del std
 
 //Declara la estructura de los alumnos
@@ -102,6 +103,12 @@ void agregar() { //Para la opción agregar alumno
     cout << "Ingrese el numero de materias: ";
     int cuantas;
     cin >> cuantas;
+    while (cin.fail()) {  // Verifica si la entrada fue incorrecta
+    	cin.clear();  // Limpia el estado de error
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Ignora el resto de la línea
+        cout << "Me parece que ese no es un numero, sabes cuantas materias tiene el alumno? escribe el numero: ";
+        cin >> cuantas;
+    }
     cin.ignore();
     //Hace un for para preguntar por materias diferentes según el número de materias que dijo el usuario
     for(int i = 0; i < cuantas; i++) {
@@ -116,6 +123,12 @@ void agregar() { //Para la opción agregar alumno
         cout << "Ingrese la calificacion de la materia " << i+1 << ": ";
         float calificacion;
         cin >> calificacion;
+        while (cin.fail()) {  // Verifica si la entrada fue incorrecta
+	    	cin.clear();  // Limpia el estado de error
+	        cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Ignora el resto de la línea
+	        cout << "Noup, esa no es una calificacion numerica, intenta otra vez: ";
+	        cin >> calificacion;
+    	}
         alumno.calificaciones.push_back(calificacion); //Indica que se ha registrado una nueva calificación
         cin.ignore();
     }
@@ -123,8 +136,11 @@ void agregar() { //Para la opción agregar alumno
     cout << "Alumno registrado exitosamente" << endl;
     cout << "----------------------------------" << endl;
 system("pause"); //Lo pusimos para que el menú no se muestre de golpe al terminar el proceso
+system("cls"); //Limpia la pantalla
+main(); //Regresa al main
 }
 
+//Indicaciones de lo que hace el main para editar algún dato de algún alumno
 void editar() { //Para editar a los alumnos
     if (alumnos.empty()) { //Si aún no se han agregado
         cout << "No hay alumnos registrados" << endl;
@@ -133,13 +149,19 @@ void editar() { //Para editar a los alumnos
     }
     cout << "----------------------------------" << endl;
     cout << "Alumnos registrados:" << endl; 
-    for (int i = 1; i < alumnos.size(); i++) { //Se hace un for para mostrar la lista de alumnos ya registrados
+    for (int i = 0; i < alumnos.size(); i++) { //Se hace un for para mostrar la lista de alumnos ya registrados
         cout << i << ". " << alumnos[i].nombre << endl;
     }
     cout << "----------------------------------" << endl;
     cout << "Seleccione un alumno: ";
     int seleccion;
     cin >> seleccion;
+    while (cin.fail()) {  // Verifica si la entrada fue incorrecta
+    	cin.clear();  // Limpia el estado de error
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Ignora el resto de la línea
+        cout << "No hay ningun alumno con ese registro, intenta otra vez: ";
+        cin >> seleccion;
+    }
     if (seleccion < 0 || seleccion >= alumnos.size()) { //Valida que el número de alumno realmente existe
         cout << "Seleccion invalida" << endl;
         cout << "----------------------------------" << endl;
@@ -151,7 +173,7 @@ void editar() { //Para editar a los alumnos
     cout << "Nombre: " << alumno.nombre << endl;
     cout << "Carrera: " << alumno.carrera << endl;
     cout << "Materias: " << endl;
-    for (int i = 0; i < alumno.materias.size(); i++) { //Según eñ número de materias que se registraron, muestra los datos guardados
+    for (int i = 0; i < alumno.materias.size(); i++) { //Según el número de materias que se registraron, muestra los datos guardados
         cout << "- " << alumno.materias[i] << endl;
         cout << "  Maestro: " << alumno.maestros[i] << endl;
         cout << "  Calificacion: " << alumno.calificaciones[i] << endl;
@@ -169,12 +191,14 @@ void editar() { //Para editar a los alumnos
         case 1: //Editar nombre
             cout << "Ingrese el nuevo nombre: ";
             getline(cin, alumno.nombre);
-            cout << "----------------------------------" << endl;
+            cout << "Alumno modificado correctamente :)" << endl;
+			cout << "----------------------------------" << endl;
         break;
         case 2: //Editar carrera
             cout << "Ingrese la nueva carrera: ";
             getline(cin, alumno.carrera);
-            cout << "----------------------------------" << endl;
+            cout << "Alumno modificado correctamente :)" << endl;
+			cout << "----------------------------------" << endl;
         break;
         case 3: //Editar materia
             if (alumno.materias.empty()) { //Si no existe ninguna materia guardada
@@ -189,6 +213,12 @@ void editar() { //Para editar a los alumnos
             cout << "Seleccione una materia: ";
             int cual;
             cin >> cual;
+            while (cin.fail()) {  // Verifica si la entrada fue incorrecta
+		    	cin.clear();  // Limpia el estado de error
+		        cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Ignora el resto de la línea
+		        cout << "No hay ninguna materia con ese registro, intenta otra vez: ";
+		        cin >> cual;
+		    }
             if (cual < 1 || cual > alumno.materias.size()) { //Valida que el numero de materia realmente existe
                 cout << "Seleccion invalida" << endl;
                 cout << "----------------------------------" << endl;
@@ -207,17 +237,26 @@ void editar() { //Para editar a los alumnos
 		            cout << "Ingrese el nuevo nombre de la materia: ";
 		            cin.ignore();
 		            getline(cin, alumno.materias[cual-1]);
-		            cout << "----------------------------------" << endl;
+		            cout << "Alumno modificado correctamente :)" << endl;
+					cout << "----------------------------------" << endl;
 		        break;
 		        case 2: //Editar nombre de maestro de imparte la materia
 		            cout << "Ingrese el nuevo maestro de la materia: ";
 		            cin.ignore();
 		            getline(cin, alumno.maestros[cual-1]);
+		            cout << "Alumno modificado correctamente :)" << endl;
 		            cout << "----------------------------------" << endl;
 		        break;
 		        case 3: //Editar la calificación de la materia
 		            cout << "Ingrese la nueva calificacion de la materia: ";
 		            cin >> alumno.calificaciones[cual-1];
+		            while (cin.fail()) {  // Verifica si la entrada fue incorrecta
+				    	cin.clear();  // Limpia el estado de error
+				        cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Ignora el resto de la línea
+				        cout << "Noup, esa no es una calificacion numerica, intenta otra vez: ";
+				        cin >> alumno.calificaciones[cual-1];
+				    }
+				    cout << "Alumno modificado correctamente :)" << endl;
 		            cout << "----------------------------------" << endl;
 		        break;
 		        default: //Si selecciona una opción que no existe
@@ -231,11 +270,12 @@ void editar() { //Para editar a los alumnos
 		    cout << "----------------------------------" << endl;
 		break;
 	}
-	cout << "Alumno modificado correctamente :)" << endl;
-	cout << "----------------------------------" << endl;
 system("pause"); //Lo pusimos para que el menú no se muestre de golpe al terminar el proceso
+system("cls"); //Limpia la pantalla
+main(); //Regresa al main
 }
 
+//Indicaciones de lo que hace el void para eliminar a un alumno
 void vaciar(){ //Para eliminar los alumnos ya registrados
     if (alumnos.empty()) { //Si aún no se guardan alumnos
         cout << "No hay alumnos registrados" << endl;
@@ -245,12 +285,18 @@ void vaciar(){ //Para eliminar los alumnos ya registrados
     cout << "----------------------------------" << endl;
     cout << "Alumnos registrados:" << endl;
     for (int i = 0; i < alumnos.size(); i++) {
-        cout << i << ". " << alumnos[i].nombre << endl;
+        cout << i << ". " << alumnos[i].nombre << endl; //Se hace un for para mostrar la lista de alumnos ya registrados
     }
     cout << "----------------------------------" << endl;
     cout << "Seleccione un alumno para eliminar: ";
     int seleccion;
     cin >> seleccion;
+    while (cin.fail()) {  // Verifica si la entrada fue incorrecta
+    	cin.clear();  // Limpia el estado de error
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Ignora el resto de la línea
+        cout << "No hay ningun alumno con ese registro, intenta otra vez: ";
+        cin >> seleccion;
+    }
     if (seleccion < 0 || seleccion >= alumnos.size()) { //Valida que el numero del alumno realmente existe
         cout << "Seleccion invalida" << endl;
         cout << "----------------------------------" << endl;
@@ -261,8 +307,11 @@ void vaciar(){ //Para eliminar los alumnos ya registrados
     cout << "Alumno eliminado exitosamente" << endl;
     cout << "----------------------------------" << endl;
 system("pause"); //Lo pusimos para que el menú no se muestre de golpe al terminar el proceso
+system("cls"); //Limpia la pantalla
+main(); //Regresa al main
 }
 
+//Indicaciones de lo que hace el void para ver los datos de los alumnos
 void ver(){ //Para ver la lista de alumnos guardados
 	if (alumnos.empty()) { //Si áun no hay alumnos registrados y el txt está vacío
         cout << "No hay alumnos registrados" << endl;
@@ -271,13 +320,19 @@ void ver(){ //Para ver la lista de alumnos guardados
     }
     cout << "----------------------------------" << endl;
     cout << "Alumnos registrados:" << endl;
-    for (int i = 0; i < alumnos.size(); i++) {
+    for (int i = 0; i < alumnos.size(); i++) { //Se hace un for para mostrar la lista de alumnos ya registrados
         cout << i << ". " << alumnos[i].nombre << endl;
     }
     cout << "----------------------------------" << endl;
     cout << "Seleccione un alumno: ";
     int seleccion;
     cin >> seleccion;
+    while (cin.fail()) {  // Verifica si la entrada fue incorrecta
+    	cin.clear();  // Limpia el estado de error
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Ignora el resto de la línea
+        cout << "No hay ningun alumno con ese registro, intenta otra vez: ";
+        cin >> seleccion;
+    }
     if (seleccion < 0 || seleccion >= alumnos.size()) { //Valida que el alumno seleccionado realmente existe
         cout << "Seleccion invalida." << endl;
         cout << "----------------------------------" << endl;
@@ -316,4 +371,6 @@ void ver(){ //Para ver la lista de alumnos guardados
 		cout << "----------------------------------" << endl;
 	}
 system("pause"); //Lo pusimos para que el menú no se muestre de golpe al terminar el proceso
+system("cls"); //Limpia la pantalla
+main(); //Regresa al main
 }
