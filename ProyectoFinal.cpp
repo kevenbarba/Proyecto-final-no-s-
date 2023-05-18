@@ -1,6 +1,6 @@
 /**************PresentaciÛn***********
 Nombre: Barba RamÌrez Kevin JosuÈ y MartÌnez MuÒoz Alejandra EstefanÌa
-Fecha: domingo 14-mayo-2023
+Fecha: jueves 18-mayo-2023
 Programa: ProyectoFinal.cpp
 Centro Universitario de los Altos / Universidad de Guadalajara
 INGENIER√çA EN COMPUTACI”N / 2DO SEMESTRE
@@ -11,7 +11,6 @@ adem·s que permite modificar/borrar cualquiera de los datos
 #include <iostream> //Se incluye la librerÌa principal
 #include <string>  //LibrerÌa para poder usar datos del tipo string
 #include <vector> //Estructura de vector utilizada para ordenar los datos y permitir guardar m·s de una cosa en cada estructura
-#include <fstream> //LibrerÌa para guardar en archivo externo
 using namespace std; //Marca el uso del cout sin la funcion del std
 
 //Declara la estructura de los alumnos
@@ -93,16 +92,13 @@ int main(){
 
 //Apartado de voids
 void agregar() { //Para la opciÛn agregar alumno
-	ofstream archivo("datos.txt"); //Abrir archivo para guardar los datos
     Alumno alumno;
     //Pide los datos del alumno
     cin.ignore();
     cout << "Ingrese el nombre del alumno: ";
     getline(cin, alumno.nombre);
-    archivo<<"Nombre: "<<alumno.nombre<<endl;
     cout << "Ingrese la carrera del alumno: ";
     getline(cin, alumno.carrera);
-    archivo<<"Carrera: "<<alumno.carrera<<endl;
     cout << "Ingrese el numero de materias: ";
     int cuantas;
     cin >> cuantas;
@@ -113,21 +109,17 @@ void agregar() { //Para la opciÛn agregar alumno
         string materia;
         getline(cin, materia);
         alumno.materias.push_back(materia); //Indica que ha aumentado una materia
-        archivo << "Materia " << i+1 << ": " << materia << endl;
         cout << "Ingrese el nombre del maestro de la materia " << i+1 << ": ";
         string maestro;
         getline(cin, maestro);
         alumno.maestros.push_back(maestro); //Indica que ha aumentado un maestro
-        archivo << "Maestro: " << maestro << endl;
         cout << "Ingrese la calificacion de la materia " << i+1 << ": ";
         float calificacion;
         cin >> calificacion;
         alumno.calificaciones.push_back(calificacion); //Indica que se ha registrado una nueva calificaciÛn
-        archivo << "Calificacion: " << calificacion << endl;
         cin.ignore();
     }
     alumnos.push_back(alumno); //Indica que ya hay un alumno m·s guardado
-    archivo.close(); // Cierra el archivo una vez ya guardados los datos
     cout << "Alumno registrado exitosamente" << endl;
     cout << "----------------------------------" << endl;
 system("pause"); //Lo pusimos para que el men˙ no se muestre de golpe al terminar el proceso
@@ -272,8 +264,7 @@ system("pause"); //Lo pusimos para que el men˙ no se muestre de golpe al termina
 }
 
 void ver(){ //Para ver la lista de alumnos guardados
-	string archivo="datos.txt"; //Define los datos del txt como "archivo"
-	if (alumnos.empty() && archivo.empty()) { //Si ·un no hay alumnos registrados y el txt est· vacÌo
+	if (alumnos.empty()) { //Si ·un no hay alumnos registrados y el txt est· vacÌo
         cout << "No hay alumnos registrados" << endl;
         cout << "----------------------------------" << endl;
         return;
@@ -283,12 +274,6 @@ void ver(){ //Para ver la lista de alumnos guardados
     for (int i = 0; i < alumnos.size(); i++) {
         cout << i << ". " << alumnos[i].nombre << endl;
     }
-    ifstream entrada(archivo.c_str()); //Abrir archivo txt
-    string linea;
-    while (getline(entrada, linea)) { //Inicia un while para mostrar todos los datos guardados
-        cout << linea << endl;
-    }
-    entrada.close(); //Cerrar archivo
     cout << "----------------------------------" << endl;
     cout << "Seleccione un alumno: ";
     int seleccion;
