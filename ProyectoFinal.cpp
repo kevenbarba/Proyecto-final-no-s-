@@ -185,6 +185,12 @@ void editar() { //Para editar a los alumnos
     cout << "3. Materias" << endl;
     int opcion;
     cin >> opcion;
+    while (cin.fail()) {  // Verifica si la entrada fue incorrecta
+    	cin.clear();  // Limpia el estado de error
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Ignora el resto de la línea
+        cout << "Me parece que ese no es una opcion valida, intenta de nuevo: ";
+        cin >> opcion;
+    }
     cin.ignore();
     cout << "----------------------------------" << endl;
     switch (opcion) { //Según la opción que seleccione
@@ -231,6 +237,12 @@ void editar() { //Para editar a los alumnos
             cout << "3. Calificacion" << endl;
             int que;
             cin >> que;
+            while (cin.fail()) {  // Verifica si la entrada fue incorrecta
+		    	cin.clear();  // Limpia el estado de error
+		        cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Ignora el resto de la línea
+		        cout << "Me parece que ese no es una opcion valida, intenta de nuevo: ";
+		        cin >> que;
+		    }
             cout << "----------------------------------" << endl;
             switch (que) { //Según la opción que seleccione
 		        case 1: //Editar nombre de materia
@@ -259,15 +271,7 @@ void editar() { //Para editar a los alumnos
 				    cout << "Alumno modificado correctamente :)" << endl;
 		            cout << "----------------------------------" << endl;
 		        break;
-		        default: //Si selecciona una opción que no existe
-		            cout << "Opcion invalida (?" << endl;
-		            cout << "----------------------------------" << endl;
-		        break;
 		    }
-		break;
-		default: //Si selecciona una opción que no existe
-		    cout << "Opcion invalida (?" << endl;
-		    cout << "----------------------------------" << endl;
 		break;
 	}
 system("pause"); //Lo pusimos para que el menú no se muestre de golpe al terminar el proceso
